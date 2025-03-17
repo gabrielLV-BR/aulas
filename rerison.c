@@ -66,22 +66,22 @@ void calculate_distances(graph g, int starting_vertex, int *distances) {
 }
 
 int add_name(char **names, const char* name) {
-	int i;
+    int i;
 
-	for (i = 0; names[i] != NULL; i++) {
-		if (strcmp(name, names[i]) == 0) {
-			return i;
-		}
-	}
-	
-	names[i] = (char*) malloc(sizeof(char) * (strlen(name) + 1));
-	strcpy(names[i], name);
-	
-	return i;
+    for (i = 0; names[i] != NULL; i++) {
+        if (strcmp(name, names[i]) == 0) {
+            return i;
+        }
+    }
+    
+    names[i] = (char*) malloc(sizeof(char) * (strlen(name) + 1));
+    strcpy(names[i], name);
+    
+    return i;
 }
 
 int add_name_pair(graph g, char **names) {
-	int i = 0;
+    int i = 0;
 
     static char name_1[100];
     static char name_2[100];
@@ -146,26 +146,26 @@ void print_names(const char** names) {
 }
 
 int main() {
-	int i;
-	int rerisson;
-	int num_relations, max_degree;
+    int i;
+    int rerisson;
+    int num_relations, max_degree;
 
     graph g;
-	char **names;
+    char **names;
     int *distances;
 
-	fscanf(stdin, "%d %d", &num_relations, &max_degree);
-	
+    fscanf(stdin, "%d %d", &num_relations, &max_degree);
+    
     g = make_graph(num_relations * 2);
     distances = (int*) malloc(g.vertex_count * sizeof(int));
 
-	names = (char**) calloc(num_relations * 2, sizeof (char*));
-	
-	for (i = 0; i < num_relations; i++) {
-		add_name_pair(g, names);
-	}
-	
-	rerisson = add_name(names, "Rerisson");
+    names = (char**) calloc(num_relations * 2, sizeof (char*));
+    
+    for (i = 0; i < num_relations; i++) {
+        add_name_pair(g, names);
+    }
+    
+    rerisson = add_name(names, "Rerisson");
 
     calculate_distances(g, rerisson, distances);
 
