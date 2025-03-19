@@ -100,7 +100,8 @@ int main(int argc, char *argv[]) {
 
 	scanf("%d", &test_case_count);
 	putchar('\n');
-	
+
+	// TODO tem que ler o input tudo de uma vez e só depois printar... Hecatombe!
 	for (current_test_case = 0; current_test_case < test_case_count; current_test_case++) {
 		connected_components = 0;
 	
