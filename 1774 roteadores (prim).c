@@ -20,10 +20,10 @@ int mst_price(int **matrix, int matrix_size) {
 		int minimum = BIG, closest_vertex;
 		
 		for (j = 0; j < matrix_size; j++) {
-			// vértices adjacentes
+			// vÃ©rtices adjacentes
 			if (
-				subtree[j] == 0 // não visitado
-				&& distances[j] < minimum // menor visto até agora
+				subtree[j] == 0 // nÃ£o visitado
+				&& distances[j] < minimum // menor visto atÃ© agora
 			)
 			{
 				closest_vertex = j;
@@ -31,15 +31,15 @@ int mst_price(int **matrix, int matrix_size) {
 			}
 		}
 		
-		// adiciona à árvore geradora 
+		// adiciona Ã  Ã¡rvore geradora 
 		subtree[closest_vertex] = 1;
 		
-		// atualiza distâncias dos vértices que circundam nóis
+		// atualiza distÃ¢ncias dos vÃ©rtices que circundam nÃ³is
 		for (j = 0; j < matrix_size; j++) {
 			if (
-				subtree[j] == 0 // não faz parte da árvore geradora
+				subtree[j] == 0 // nÃ£o faz parte da Ã¡rvore geradora
 				&& matrix[closest_vertex][j] != 0
-				&& matrix[closest_vertex][j] < distances[j] // menor distância já encontrada
+				&& matrix[closest_vertex][j] < distances[j] // menor distÃ¢ncia jÃ¡ encontrada
 			) {
 				distances[j] = matrix[closest_vertex][j];
 			}
