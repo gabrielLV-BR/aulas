@@ -3,7 +3,6 @@
 
 #define MAX 1000
 
-
 typedef struct node_t {
 	int value;
 	struct node_t *next;
