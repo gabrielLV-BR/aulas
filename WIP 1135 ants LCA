@@ -1,0 +1,83 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+ long long tree_distance(
+	int anthill_count,
+	int *parent_list,
+	int *distance_to_parent,
+	int *level,
+	int vertex_a,
+	int vertex_b
+) {
+	long long distance = 0;
+
+	while (vertex_a != vertex_b) {
+		if (level[vertex_a] >= level[vertex_b]) {
+			distance += distance_to_parent[vertex_a];
+			vertex_a = parent_list[vertex_a];
+		}
+		
+		if (level[vertex_b] >= level[vertex_a]) {
+			distance += distance_to_parent[vertex_b];
+			vertex_b = parent_list[vertex_b];
+		}
+	}
+	
+	return distance;
+}
+
+int main(int argc, char *argv[]) {
+	int i, hills, queries;
+
+	int *parent = NULL;
+	int *level = NULL;
+	unsigned int *distance_to_parent = NULL;
+	
+	while (1) {
+		free(parent);
+		free(distance_to_parent);
+		free(level);
+	
+		scanf("%d", &hills);
+		
+		if (!hills) break;
+	
+		parent = malloc(hills * sizeof(int));
+		distance_to_parent  = malloc(hills * sizeof(unsigned int));	
+		level = malloc(hills * sizeof(int));
+		
+		for (i = 0; i < hills; i++) {
+			parent[i] = 0;
+			distance_to_parent[i] = 0;
+		}
+		
+		int connected_tunnel, distance;
+		for (i = 1; i < hills; i++) {
+			scanf("%d %d", &connected_tunnel, &distance);
+
+			// genial
+			parent[i] = connected_tunnel;
+			distance_to_parent[i] = distance;
+			level[i] = level[connected_tunnel] + 1;
+		}
+		
+		scanf("%d", &queries);
+		
+		int hill_a, hill_b;
+		long long calc_distance;
+
+		while (queries--) {
+			scanf("%d %d", &hill_a, &hill_b);
+			
+			calc_distance = tree_distance(hills, parent, distance_to_parent, level, hill_a, hill_b);
+			printf("%lld", calc_distance);
+
+			if (queries) putchar(' ');
+		}
+		
+		putchar('\n');
+	}
+	
+	return 0;
+}
