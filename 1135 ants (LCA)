@@ -1,25 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
- long long tree_distance(
+// O professor Cadinho é um gênio
+
+long long tree_distance(
 	int anthill_count,
 	int *parent_list,
 	int *distance_to_parent,
 	int *level,
 	int vertex_a,
-	int vertex_b
-) {
+	int vertex_b)
+{
 	long long distance = 0;
-
+	
 	while (vertex_a != vertex_b) {
-		if (level[vertex_a] >= level[vertex_b]) {
+		if (level[vertex_a] > level[vertex_b]) {
 			distance += distance_to_parent[vertex_a];
 			vertex_a = parent_list[vertex_a];
 		}
-		
-		if (level[vertex_b] >= level[vertex_a]) {
+		else if (level[vertex_b] > level[vertex_a]) {
 			distance += distance_to_parent[vertex_b];
+			vertex_b = parent_list[vertex_b];
+		}
+		else {
+			distance += distance_to_parent[vertex_a] + distance_to_parent[vertex_b];
+			vertex_a = parent_list[vertex_a];
 			vertex_b = parent_list[vertex_b];
 		}
 	}
@@ -43,20 +48,14 @@ int main(int argc, char *argv[]) {
 		
 		if (!hills) break;
 	
-		parent = malloc(hills * sizeof(int));
-		distance_to_parent  = malloc(hills * sizeof(unsigned int));	
-		level = malloc(hills * sizeof(int));
-		
-		for (i = 0; i < hills; i++) {
-			parent[i] = 0;
-			distance_to_parent[i] = 0;
-		}
+		level = (int*) calloc(hills, sizeof(int));
+		parent = (int*) calloc(hills, sizeof(int));
+		distance_to_parent = (unsigned int*) calloc(hills, sizeof(unsigned int));	
 		
 		int connected_tunnel, distance;
 		for (i = 1; i < hills; i++) {
 			scanf("%d %d", &connected_tunnel, &distance);
 
-			// genial
 			parent[i] = connected_tunnel;
 			distance_to_parent[i] = distance;
 			level[i] = level[connected_tunnel] + 1;
